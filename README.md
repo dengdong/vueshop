@@ -28,5 +28,24 @@ cnpm install stylus stylus-loader --save-dev
 # swiper
 cnpm install --save swiper
 
+# vuex
+cnpm install --save vuex
+
+#mint-ui
+cnpm install --save mint-ui
+cnpm install --save-dev babel-plugin-component
+
+#mock.js
+cnpm install mockjs
+
+# better-scroll
+cnpm install better-scroll --save
+
+#
+cnpm install --save vue-lazyload
+
+cnpm install --save date-fns
+
+
 ```
 

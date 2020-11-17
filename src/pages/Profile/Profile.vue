@@ -2,17 +2,17 @@
   <section class="profile">
     <HeaderTop title="我的"></HeaderTop>
     <section class="profile-number">
-      <router-link to="/login"  class="profile-link">
+      <router-link :to="!userinfo._id ? '/login':'/userinfo'"  class="profile-link">
         <div class="profile_image">
           <i class="iconfont icon-person"></i>
         </div>
         <div class="user-info">
-          <p class="user-info-top">登录/注册</p>
+          <p class="user-info-top" v-if="!userinfo.phone">{{userinfo.name || '登录/注册'}}</p>
           <p>
             <span class="user-icon">
               <i class="iconfont icon-shouji icon-mobile"></i>
             </span>
-            <span class="icon-mobile-number">暂无绑定手机号</span>
+            <span class="icon-mobile-number">{{ userinfo.phone || '暂无绑定手机号'}}</span>
           </p>
         </div>
         <span class="arrow">
@@ -91,22 +91,47 @@
         </div>
       </a>
     </section>
+
+    <section class="profile_my_order border-1px">
+      <mt-button type="danger" style="width: 100%"
+                 @click="logout"
+                 v-if="userinfo._id">退出登录</mt-button>
+    </section>
   </section>
 </template>
 
 <script>
+  import  { MessageBox ,Toast } from  'mint-ui'
   import HeaderTop from "../../components/HeaderTop/HeaderTop";
+  import {mapState} from 'vuex'
 
   export default {
     components:{
       HeaderTop
+    },
+    computed: {
+      ...mapState(['userinfo'])
+    },
+    methods: {
+      logout(){
+        MessageBox.confirm('确认退出吗').then(
+          action => {
+            this.$store.dispatch('logout')
+            Toast('退出完成')
+          },
+          action => {
+            console.log('取消退出')
+
+          }
+        )
+      }
     }
   }
 </script>
 
 <style lang="stylus" rel="stylesheet/stylus">
   @import "../../common/stylus/mixins.styl"
-  .profile //我的
+  .profile
     width 100%
     overflow hidden
     .header
